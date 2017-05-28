@@ -31,12 +31,12 @@ The project was tested over provided data in `../data/obj_pose-laser-radar-synth
 According to the criteria:
 
 
-|value |minimum |obtained |result |
-|:---:|:---:|:---:|:---:|
-|px |0.09 |0.06 |<font style="color:green;"> PASS</font> |
-|py |0.10 |0.08 |PASS|
-|vx |0.40 |0.29 |PASS|
-|vy |0.30 |0.21 |PASS|
+|Value |Minimum |Obtained |
+|:---:|:---:|:---:|
+|px |0.09 |0.06 |
+|py |0.10 |0.08 |
+|vx |0.40 |0.29 |
+|vy |0.30 |0.20 |
 
 Here we can see the result of the tracking:
 
@@ -45,3 +45,8 @@ Here we can see the result of the tracking:
 ## 3- Follows the Correct Algorithm
 
 The code was structured based on the previous project on EKF, therefore the algorithm was only updated to include the bicicle model and ukf augmented states and sigma points.
+
+## 4- Code Efficiency
+
+Where possible, the code was optimized to avoid excess multiplications or weird loops. There also should not have memory leaks or uncaught weird behavior.
+
