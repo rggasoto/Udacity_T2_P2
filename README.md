@@ -29,12 +29,12 @@ In order to properly model the process noise parameters, the NIS projection was 
 The project was tested over provided data in `../data/obj_pose-laser-radar-synthetic-input.txt`
 
 According to the criteria:
-| value | minimum | obtained | result |
+|value |minimum |obtained |result |
 |:---:|:---:|:---:|:---:|:---:|
-| px| 0.09 | 0.06 | <span style="color:green">PASS</span> |
-| py| 0.10 | 0.08 | <span style="color:green">PASS</span> |
-| vx| 0.40 | 0.29 | <span style="color:green">PASS</span> |
-| vy| 0.30 | 0.21 | <span style="color:green">PASS</span> |
+|px |0.09 |0.06 |<span style="color:green">PASS</span> |
+|py |0.10 |0.08 |<span style="color:green">PASS</span> |
+|vx |0.40 |0.29 |<span style="color:green">PASS</span> |
+|vy |0.30 |0.21 |<span style="color:green">PASS</span> |
 
 Here we can see the result of the tracking:
 
