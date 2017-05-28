@@ -33,7 +33,9 @@ According to the criteria:
 
 |value |minimum |obtained |result |
 |:---:|:---:|:---:|:---:|
-|px |0.09 |0.06 |```diff +PASS ```|
+|px |0.09 |0.06 |```diff 
++PASS 
+```|
 |py |0.10 |0.08 |PASS|
 |vx |0.40 |0.29 |PASS|
 |vy |0.30 |0.21 |PASS|
