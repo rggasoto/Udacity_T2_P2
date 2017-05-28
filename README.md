@@ -30,6 +30,15 @@ The project was tested over provided data in `../data/obj_pose-laser-radar-synth
 
 According to the criteria:
 
+|Configuration | orientations| Pix per cell|cells per block| channel |
+|:---:|:---:|:---:|:---:|:---:|
+|1 |9|8|2|All|
+|2 |8|8|2|All|
+|3 |9|8|2|Y  |
+|4 |8|16|2|All|
+|5 |12|8|2|Y|
+
+
 |value |minimum |obtained |result |
 |:---:|:---:|:---:|:---:|:---:|
 |px |0.09 |0.06 |PASS|
