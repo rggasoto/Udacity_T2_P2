@@ -42,10 +42,10 @@ UKF::UKF() {
 
   time_us_ = 0.0f;
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 0.55f;
+  std_a_ = 0.5f;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 0.55f;
+  std_yawdd_ = 0.8f;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15f;
@@ -67,6 +67,9 @@ UKF::UKF() {
 
   // Sigma point spreading parameter
   lambda_ = 3 - n_aug_;
+
+  NIS_radar_ = 0;
+  NIS_laser_ = 0;
 }
 
 UKF::~UKF() {}
@@ -86,14 +89,14 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     x_aug_(5) = 0;
     x_aug_(6) = 0;
     
-    // intialized state covariance matrix P 
+    // intialize state covariance matrix P (with values obtained from running the code some times earlier)
     P_ << .05, 0, 0, 0, 0,
             0, .05, 0, 0, 0,
             0, 0, .6, 0, 0,
             0, 0, 0, 1.15, 0,
             0, 0, 0, 0, .15;
 
-    // initialized augmented state covariance matrix P
+    // initialize augmented state covariance matrix P
     P_aug_.fill(0.0);
     P_aug_.topLeftCorner(n_x_,n_x_) = P_;
     P_aug_(5,5) = std_a_*std_a_;
@@ -149,14 +152,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   float dt = (meas_package.timestamp_ - previous_timestamp_) / 1000000.0; //dt - expressed in seconds
   previous_timestamp_ = meas_package.timestamp_;
 
-  // If timestamps are too large, use a trick to break them up  
-  while (dt > 0.1) {
-    const double dt2 = 0.1;
-    Prediction(dt2);
-    dt -= dt2;
-  }
   Prediction(dt);
-  //cout << "Prediction Complete " << endl;
+  
 
   //Update
   switch (meas_package.sensor_type_){
@@ -223,7 +220,7 @@ void UKF::Prediction(double delta_t) {
       Xsig_pred_(2,i) = v + delta_t*sigma_a;
       Xsig_pred_(3,i) = yaw + yaw_rate*delta_t + 0.5*delta_t*delta_t*sigma_yaw;
       Xsig_pred_(4,i) = yaw_rate + delta_t*sigma_yaw;
-    } else{
+    } else{ 
       Xsig_pred_(0,i) = px + v*cos(yaw)*delta_t + 0.5*delta_t*delta_t*cos(yaw)*sigma_a;
       Xsig_pred_(1,i) = py + v*sin(yaw)*delta_t + 0.5*delta_t*delta_t*sin(yaw)*sigma_a;
       Xsig_pred_(2,i) = v + delta_t*sigma_a;
@@ -232,11 +229,11 @@ void UKF::Prediction(double delta_t) {
     } 
   }
 
-  //predicted state mean
+  //state mean
   x_.fill(0);
   x_ = Xsig_pred_ * weights_; // Matrix Calc (5X15) * (15X1) = (5X1)
 
-  //predicted state covariance matrix
+  //state covariance matrix
   P_.fill(0);
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
 
@@ -373,27 +370,26 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   
   //transform sigma points into measurement space
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //2n+1 simga points
-
-    //extract values for better readibility (sigma point predictions in process space)
-    double p_x = Xsig_pred_(0,i);
-    double p_y = Xsig_pred_(1,i);
+    
+    double px = Xsig_pred_(0,i);
+    double py = Xsig_pred_(1,i);
     double v  = Xsig_pred_(2,i);
     double yaw = Xsig_pred_(3,i);
     double v1 = cos(yaw)*v;
     double v2 = sin(yaw)*v;
     
     //check for zeros
-    if (fabs(p_x) < 0.001) {
-     p_x = 0.001;
+    if (fabs(px) < 0.001) {
+     px = 0.001;
     }
-    if (fabs(p_y) < 0.001) {
-     p_y = 0.001;
+    if (fabs(py) < 0.001) {
+     py = 0.001;
     }
 
     //measurement model (sigma point predictions in measurement space)
-    Zsig(0,i) = sqrt(p_x*p_x + p_y*p_y);                        //r
-    Zsig(1,i) = atan2(p_y,p_x);                                 //phi
-    Zsig(2,i) = (p_x*v1 + p_y*v2 ) / sqrt(p_x*p_x + p_y*p_y);   //r_dot
+    Zsig(0,i) = sqrt(px*px + py*py);                        //r
+    Zsig(1,i) = atan2(py,px);                                 //phi
+    Zsig(2,i) = (px*v1 + py*v2 ) / sqrt(px*px + py*py);   //r_dot
   }
 
   //mean predicted measurement
