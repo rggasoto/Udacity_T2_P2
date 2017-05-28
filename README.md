@@ -44,7 +44,7 @@ Here we can see the result of the tracking:
 
 ## 3- Follows the Correct Algorithm
 
-The code was structured based on the previous project on EKF, therefore the algorithm was only updated to include the bicicle model and ukf augmented states and sigma points.
+The code was structured based on the previous project on EKF, therefore the algorithm was only updated to include the bicicle model and ukf augmented states and sigma points, according to the provided in lecture.
 
 ## 4- Code Efficiency
 
