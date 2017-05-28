@@ -29,6 +29,7 @@ In order to properly model the process noise parameters, the NIS projection was 
 The project was tested over provided data in `../data/obj_pose-laser-radar-synthetic-input.txt`
 
 According to the criteria:
+
 |value |minimum |obtained |result |
 |:---:|:---:|:---:|:---:|:---:|
 |px |0.09 |0.06 |PASS|
