@@ -31,10 +31,10 @@ The project was tested over provided data in `../data/obj_pose-laser-radar-synth
 According to the criteria:
 |value |minimum |obtained |result |
 |:---:|:---:|:---:|:---:|:---:|
-|px |0.09 |0.06 |<span style="color:green">PASS</span> |
-|py |0.10 |0.08 |<span style="color:green">PASS</span> |
-|vx |0.40 |0.29 |<span style="color:green">PASS</span> |
-|vy |0.30 |0.21 |<span style="color:green">PASS</span> |
+|px |0.09 |0.06 |PASS|
+|py |0.10 |0.08 |PASS|
+|vx |0.40 |0.29 |PASS|
+|vy |0.30 |0.21 |PASS|
 
 Here we can see the result of the tracking:
 
