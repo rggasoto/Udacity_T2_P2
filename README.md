@@ -35,8 +35,8 @@ According to the criteria:
 |:---:|:---:|:---:|
 |px |0.09 |0.06 |
 |py |0.10 |0.08 |
-|vx |0.40 |0.29 |
-|vy |0.30 |0.20 |
+|vx |0.40 |0.27 |
+|vy |0.30 |0.15 |
 
 Here we can see the result of the tracking:
 
