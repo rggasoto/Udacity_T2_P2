@@ -90,11 +90,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     x_aug_(6) = 0;
     
     // intialize state covariance matrix P (with values obtained from running the code some times earlier)
-    P_ << .05, 0, 0, 0, 0,
-            0, .05, 0, 0, 0,
-            0, 0, .6, 0, 0,
-            0, 0, 0, 1.15, 0,
-            0, 0, 0, 0, .15;
+    P_ << 1, 0, 0, 0, 0,
+            0, 1, 0, 0, 0,
+            0, 0, .5, 0, 0,
+            0, 0, 0, .01, 0,
+            0, 0, 0, 0, .01;
 
     // initialize augmented state covariance matrix P
     P_aug_.fill(0.0);
@@ -246,6 +246,7 @@ void UKF::Prediction(double delta_t) {
 
     P_ = P_ + weights_(i) * x_diff * x_diff.transpose() ;
   }
+  //std::cout << P_ <<std::endl<<std::endl;
 }
 
 /**
